@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.OracleClient;
+using System.Data;
 
 
 //https://msdn.microsoft.com/en-us/library/dw70f090(v=vs.110).aspx
 
-namespace CivilWarProject.ADOLayer
+namespace CivilWarProject
 {
     class userOracleADO : userADO
     {
@@ -19,8 +20,6 @@ namespace CivilWarProject.ADOLayer
             int nextId;
             String sql = "SELECT (MAX)UserId FROM User";
 
-            using (connection)
-            {
                 OracleCommand cmd = connection.CreateCommand();
                 cmd.CommandText = sql;
 
@@ -40,16 +39,53 @@ namespace CivilWarProject.ADOLayer
 
                 connection.Close();
                 return nextId;
-            }
         }
-        public void userADO.createUser(int id, string username, string password, string email)
+
+        public void createUser(int id, string username, string password, string email)
         {
             String sql = "INSERT INTO user VALUES (" + id + ",'" + username + "','" + password + "','" + email + ")";
 
-            using (connection)
-            {
-                OracleCommand
-            }
+                OracleCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+
+                try
+                {
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
+                catch (Exception x)
+                {
+                    Console.WriteLine("There was error! could not create user");
+                }
         }
+
+
+        /* http://stackoverflow.com/questions/3940587/calling-oracle-stored-procedure-from-c
+         * Author: Abdul
+         * Acces Date: 30/11/16
+         */
+        public bool nameAvailable(String username)
+        {
+            bool isAvailable;
+
+                OracleCommand cmd = new OracleCommand("ValidateUsername", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Adding Paramters
+                cmd.Parameters.AddWithValue("desiredName", username);
+
+                //Runing the procedure
+                connection.Open();
+
+                OracleDataReader reader = cmd.ExecuteReader();
+
+                isAvailable = reader.GetBoolean(0);
+
+
+
+                return isAvailable;
+        }
+
     }
 }

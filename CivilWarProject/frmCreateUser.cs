@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace CivilWarProject
 {
-    public partial class Form1 : Form
+    public partial class frmCreateUser : Form
     {
-        public Form1()
+        public frmCreateUser()
         {
             InitializeComponent();
+        }
+
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+            User newUser = new User(txtUsername.Text, txtPassword.Text, txtEmail.Text);
+            
         }
     }
 }

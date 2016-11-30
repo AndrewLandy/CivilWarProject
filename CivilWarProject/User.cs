@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CivilWarProject.User
+namespace CivilWarProject
 {
-    class User
+    public class User
     {
-        private ADOLayer.userOracleADO userFactory = new ADOLayer.userOracleADO();
+        private userOracleADO userFactory = new userOracleADO();
 
         private int userId;
         private String username;
@@ -67,7 +67,7 @@ namespace CivilWarProject.User
                 email = value;
             }
         }
-        
+
         #endregion
 
         public User(String username, String password, String email)
@@ -77,7 +77,10 @@ namespace CivilWarProject.User
             Password = password;
             Email = email;
 
-            userFactory.c
+            if (userFactory.nameAvailable(username))
+                userFactory.createUser(UserId, Username, Password, Email);
+            else
+                Console.WriteLine("That name is taken!");
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace CivilWarProject.ADOLayer
+namespace CivilWarProject
 {
     interface userADO
     {
@@ -14,6 +14,7 @@ namespace CivilWarProject.ADOLayer
 
         void createUser(int id, String username, String password, String email);
 
+        bool nameAvailable(String username);
 
     }
 }
