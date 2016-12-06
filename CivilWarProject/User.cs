@@ -82,5 +82,16 @@ namespace CivilWarProject
             else
                 Console.WriteLine("That name is taken!");
         }
+
+        public User(String username, String password)
+        {
+            Username = username;
+            Password = password;
+        }
+
+        public bool logIn()
+        {
+            return userFactory.logIn(Username, Password);
+        }
     }
 }

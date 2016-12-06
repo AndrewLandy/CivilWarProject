@@ -69,23 +69,41 @@ namespace CivilWarProject
         {
             bool isAvailable;
 
-                OracleCommand cmd = new OracleCommand("ValidateUsername", connection);
-                cmd.CommandType = CommandType.StoredProcedure;
+            OracleCommand cmd = new OracleCommand("ValidateUsername", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
 
-                // Adding Paramters
-                cmd.Parameters.AddWithValue("desiredName", username);
+            // Adding Paramters
+            cmd.Parameters.AddWithValue("desiredName", username);
 
-                //Runing the procedure
-                connection.Open();
+            //Runing the procedure
+            connection.Open();
 
-                OracleDataReader reader = cmd.ExecuteReader();
+            OracleDataReader reader = cmd.ExecuteReader();
 
-                isAvailable = reader.GetBoolean(0);
+            isAvailable = reader.GetBoolean(0);
 
-
-
-                return isAvailable;
+            return isAvailable;
         }
 
+        public bool logIn(String username, String password)
+        {
+            bool validCreds;
+
+            OracleCommand cmd = new OracleCommand("ValidateLogin", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            //Adding Paremeters
+            cmd.Parameters.AddWithValue("usernameEntered", username);
+            cmd.Parameters.AddWithValue("passwordEntered", password);
+
+            //Running the procedure
+            connection.Open();
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            validCreds = reader.GetBoolean(0);
+
+            return validCreds;
+        }
     }
 }

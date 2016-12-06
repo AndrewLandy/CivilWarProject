@@ -16,5 +16,7 @@ namespace CivilWarProject
 
         bool nameAvailable(String username);
 
+        bool logIn(String username, String password);
+
     }
 }
