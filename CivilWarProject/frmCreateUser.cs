@@ -48,8 +48,17 @@ namespace CivilWarProject
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            //try
+            //{
             User newUser = new User(txtUsername.Text, txtPassword.Text, txtEmail.Text);
-            
+            MessageBox.Show("SUCCESS!");
+            //}
+
+            //catch (Exception x)
+            //{
+            //    MessageBox.Show("Fail!");
+            //}
+
         }
 
         private void btnBack_Click(object sender, EventArgs e)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.OracleClient;
+using Oracle.ManagedDataAccess.Client;
 using System.Data;
 
 
@@ -18,7 +18,7 @@ namespace CivilWarProject
         public int assignUserID()
         {
             int nextId;
-            String sql = "SELECT (MAX)UserId FROM User";
+            String sql = "SELECT MAX(UserId) FROM userAccount";
 
                 OracleCommand cmd = connection.CreateCommand();
                 cmd.CommandText = sql;
@@ -43,7 +43,7 @@ namespace CivilWarProject
 
         public void createUser(int id, string username, string password, string email)
         {
-            String sql = "INSERT INTO user VALUES (" + id + ",'" + username + "','" + password + "','" + email + ")";
+            String sql = "INSERT INTO userAccount VALUES (" + id + ",'" + username + "','" + password + "','" + email + ")";
 
                 OracleCommand cmd = connection.CreateCommand();
                 cmd.CommandText = sql;
@@ -52,6 +52,7 @@ namespace CivilWarProject
                 {
                     connection.Open();
                     cmd.ExecuteNonQuery();
+                    connection.Close();
                 }
 
                 catch (Exception x)
@@ -67,13 +68,17 @@ namespace CivilWarProject
          */
         public bool nameAvailable(String username)
         {
-            bool isAvailable;
+            Int16 available=0;
+            bool isAvailable = false;
 
             OracleCommand cmd = new OracleCommand("ValidateUsername", connection);
             cmd.CommandType = CommandType.StoredProcedure;
 
             // Adding Paramters
-            cmd.Parameters.AddWithValue("desiredName", username);
+            cmd.Parameters.Add("desiredName", username);
+
+            // Adding return parameter
+            cmd.Parameters.Add("validName", OracleDbType.Int16, available, ParameterDirection.Output);
 
             //Runing the procedure
             connection.Open();
@@ -93,8 +98,8 @@ namespace CivilWarProject
             cmd.CommandType = CommandType.StoredProcedure;
 
             //Adding Paremeters
-            cmd.Parameters.AddWithValue("usernameEntered", username);
-            cmd.Parameters.AddWithValue("passwordEntered", password);
+            cmd.Parameters.Add("usernameEntered", username);
+            cmd.Parameters.Add("passwordEntered", password);
 
             //Running the procedure
             connection.Open();

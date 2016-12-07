@@ -79,6 +79,7 @@ namespace CivilWarProject
 
             if (userFactory.nameAvailable(username))
                 userFactory.createUser(UserId, Username, Password, Email);
+                
             else
                 Console.WriteLine("That name is taken!");
         }
