@@ -63,6 +63,16 @@ namespace CivilWarProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CivilWar1 {
+            get {
+                object obj = ResourceManager.GetObject("CivilWar1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap YR3_Game_Menu {
             get {
                 object obj = ResourceManager.GetObject("YR3 Game Menu", resourceCulture);

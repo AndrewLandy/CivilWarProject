@@ -20,25 +20,26 @@ namespace CivilWarProject
             int nextId;
             String sql = "SELECT MAX(UserId) FROM userAccount";
 
-                OracleCommand cmd = connection.CreateCommand();
-                cmd.CommandText = sql;
+            OracleCommand cmd = connection.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Connection = connection;
 
-                try
-                {
-                    connection.Open();
+            //try
+            //{
+            connection.Open();
 
-                    OracleDataReader reader = cmd.ExecuteReader();
+            OracleDataReader reader = cmd.ExecuteReader();
 
-                    nextId = Convert.ToInt16(reader.GetValue(0));
-                }
+            nextId = Convert.ToInt16(reader.GetValue(0)) + 1;
+            //}
 
-                catch (Exception x)
-                {
-                    nextId = 01;
-                }
+            //catch (Exception x)
+            //{
+            //    nextId = 01;
+            //}
 
-                connection.Close();
-                return nextId;
+            connection.Close();
+            return nextId;
         }
 
         public void createUser(int id, string username, string password, string email)
@@ -110,5 +111,92 @@ namespace CivilWarProject
 
             return validCreds;
         }
-    }
-}
+
+        //public int getNextUserID()
+        //{
+
+        //    int intNextID;
+
+        //    myConn.Open();
+
+        //    OracleCommand cmd = new OracleCommand("USER_ID", myConn);
+
+
+        //    cmd.CommandType = CommandType.StoredProcedure;
+
+
+        //    cmd.Parameters.Add("USERID", OracleDbType.Int32).Direction = ParameterDirection.Output;
+
+
+        //    cmd.ExecuteNonQuery();
+
+
+        //    intNextID = Convert.ToInt32(cmd.Parameters["USERID"].Value.ToString());
+
+
+
+        //    //    myConn.Open();
+
+
+        //    //OracleDataReader dr = cmd.ExecuteReader();
+        //    //dr.Read();
+
+
+        //    //if (dr.IsDBNull(0))
+        //    //    intNextID = 1;
+        //    //else
+        //    //    intNextID = Convert.ToInt16(dr.GetValue(0)) + 1;
+
+
+        //    myConn.Close();
+        //    return intNextID++;
+
+
+        //} //end getUserID
+
+
+        public DataSet leaderBoardScore()
+        {
+            String strSQL = "SELECT username, noGamesWon FROM userAccount WHERE rownum <= 10 ORDER BY noGamesWon DESC";
+
+            OracleCommand cmd = new OracleCommand(strSQL, connection);
+
+            connection.Open();
+
+            // Create an Oracle DataAdapter
+            OracleDataAdapter da = new OracleDataAdapter(cmd);
+            DataSet ds = new DataSet();
+
+
+
+
+            da.Fill(ds, "UserAccount");
+            connection.Close();
+
+            return ds;
+        }
+
+
+        public DataSet leaderBoardName()
+        {
+            String strSQL = "SELECT username, noGamesWon FROM userAccount WHERE rownum <= 10 ORDER BY username DESC";
+
+            OracleCommand cmd = new OracleCommand(strSQL, connection);
+
+            connection.Open();
+
+            // Create an Oracle DataAdapter
+            OracleDataAdapter da = new OracleDataAdapter(cmd);
+            DataSet ds = new DataSet();
+
+
+
+
+            da.Fill(ds, "UserAccount");
+            connection.Close();
+
+            return ds;
+        }
+
+    } // End class
+} // End namespace

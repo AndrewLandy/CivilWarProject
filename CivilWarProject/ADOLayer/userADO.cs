@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 
 namespace CivilWarProject
@@ -17,6 +18,10 @@ namespace CivilWarProject
         bool nameAvailable(String username);
 
         bool logIn(String username, String password);
+
+        DataSet leaderBoardScore();
+
+        DataSet leaderBoardName();
 
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace CivilWarProject
 {
@@ -90,9 +91,26 @@ namespace CivilWarProject
             Password = password;
         }
 
+        public User()
+        {
+          
+        }
+
         public bool logIn()
         {
             return userFactory.logIn(Username, Password);
         }
+
+        public DataSet leaderBoardName()
+        {
+            return userFactory.leaderBoardName();
+        }
+
+        public DataSet leaderBoardScore()
+        {
+            return userFactory.leaderBoardScore();
+        }
+
+
     }
 }
