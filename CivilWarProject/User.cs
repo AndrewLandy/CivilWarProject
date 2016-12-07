@@ -77,11 +77,11 @@ namespace CivilWarProject
             Password = password;
             Email = email;
 
-            if (userFactory.nameAvailable(username))
-                userFactory.createUser(UserId, Username, Password, Email);
-                
-            else
-                Console.WriteLine("That name is taken!");
+            //if (userFactory.nameAvailable(username))
+            userFactory.createUser(UserId, Username, Password, Email);
+
+            //else
+            //    Console.WriteLine("That name is taken!");
         }
 
         public User(String username, String password)

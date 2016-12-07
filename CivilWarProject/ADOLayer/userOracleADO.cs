@@ -43,22 +43,22 @@ namespace CivilWarProject
 
         public void createUser(int id, string username, string password, string email)
         {
-            String sql = "INSERT INTO userAccount VALUES (" + id + ",'" + username + "','" + password + "','" + email + ")";
+            String sql = "INSERT INTO userAccount VALUES (" + 4 + ",'" + username + "','" + password + "','" + email + "')";
 
                 OracleCommand cmd = connection.CreateCommand();
                 cmd.CommandText = sql;
 
-                try
-                {
-                    connection.Open();
-                    cmd.ExecuteNonQuery();
-                    connection.Close();
-                }
+            //try
+            //{
+            connection.Open();
+            cmd.ExecuteNonQuery();
+            connection.Close();
+            //}
 
-                catch (Exception x)
-                {
-                    Console.WriteLine("There was error! could not create user");
-                }
+            //catch (Exception x)
+            //{
+            //    Console.WriteLine("There was error! could not create user");
+            //}
         }
 
 
