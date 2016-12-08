@@ -30,17 +30,18 @@ namespace CivilWarProject
         {
             LoggingIn = new User(txtName.Text, txtPassword.Text);
 
-            if (LoggingIn.logIn())
-            {
-                frmPreGame nxtFrm = new frmPreGame();
+            //if (LoggingIn.logIn())
+            //{
+            frmPreGame nxtFrm = new frmPreGame();
 
-                nxtFrm.Show();
-                parent.Close();
-                this.Close();
-            }
+            nxtFrm.Show();
+            this.Hide();
+            //parent.Close();
+            
+            //}
 
-            else
-                MessageBox.Show("ERROR! INvalid Username and Password combination\nPlease Make sure your details are correct and try again.");
+            //else
+            //    MessageBox.Show("ERROR! Invalid Username and Password combination\nPlease Make sure your details are correct and try again.");
         }
     }
 }

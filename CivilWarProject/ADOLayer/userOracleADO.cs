@@ -24,19 +24,14 @@ namespace CivilWarProject
             cmd.CommandText = sql;
             cmd.Connection = connection;
 
-            //try
-            //{
             connection.Open();
 
             OracleDataReader reader = cmd.ExecuteReader();
 
-            nextId = Convert.ToInt16(reader.GetValue(0)) + 1;
-            //}
-
-            //catch (Exception x)
-            //{
-            //    nextId = 01;
-            //}
+            //if (reader == null)
+            nextId = 1;
+            //else
+            //    nextId = Convert.ToInt16(reader.GetValue(0)) + 1;
 
             connection.Close();
             return nextId;
@@ -86,13 +81,21 @@ namespace CivilWarProject
 
             OracleDataReader reader = cmd.ExecuteReader();
 
-            isAvailable = reader.GetBoolean(0);
+            available = reader.GetInt16(0);
+
+            connection.Close();
+
+            if (available == 1)
+                isAvailable = true;
+            else
+                isAvailable = false;
 
             return isAvailable;
         }
 
         public bool logIn(String username, String password)
         {
+            int valid =0;
             bool validCreds;
 
             OracleCommand cmd = new OracleCommand("ValidateLogin", connection);
@@ -102,12 +105,22 @@ namespace CivilWarProject
             cmd.Parameters.Add("usernameEntered", username);
             cmd.Parameters.Add("passwordEntered", password);
 
+            //Adding return retrun paremeters
+            cmd.Parameters.Add("succesfullLogin", OracleDbType.Int16, valid, ParameterDirection.Output);
+
             //Running the procedure
             connection.Open();
 
             OracleDataReader reader = cmd.ExecuteReader();
 
-            validCreds = reader.GetBoolean(0);
+            valid = reader.GetInt16(0);
+
+            connection.Close();
+
+            if (valid == 1)
+                validCreds = true;
+            else
+                validCreds = false;
 
             return validCreds;
         }
