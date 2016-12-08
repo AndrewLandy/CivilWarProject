@@ -28,10 +28,10 @@ namespace CivilWarProject
 
             OracleDataReader reader = cmd.ExecuteReader();
 
-            //if (reader == null)
-            nextId = 1;
-            //else
-            //    nextId = Convert.ToInt16(reader.GetValue(0)) + 1;
+            if (reader == null)
+                nextId = 1;
+            else
+                nextId = Convert.ToInt16(reader.GetInt32(0)) + 1;
 
             connection.Close();
             return nextId;
@@ -39,7 +39,7 @@ namespace CivilWarProject
 
         public void createUser(int id, string username, string password, string email)
         {
-            String sql = "INSERT INTO userAccount VALUES (" + 4 + ",'" + username + "','" + password + "','" + email + "')";
+            String sql = "INSERT INTO userAccount VALUES (" + id + ",'" + username + "','" + password + "','" + email + "'," + 0 +")";
 
                 OracleCommand cmd = connection.CreateCommand();
                 cmd.CommandText = sql;
@@ -56,7 +56,6 @@ namespace CivilWarProject
             //    Console.WriteLine("There was error! could not create user");
             //}
         }
-
 
         /* http://stackoverflow.com/questions/3940587/calling-oracle-stored-procedure-from-c
          * Author: Abdul
@@ -125,49 +124,6 @@ namespace CivilWarProject
             return validCreds;
         }
 
-        //public int getNextUserID()
-        //{
-
-        //    int intNextID;
-
-        //    myConn.Open();
-
-        //    OracleCommand cmd = new OracleCommand("USER_ID", myConn);
-
-
-        //    cmd.CommandType = CommandType.StoredProcedure;
-
-
-        //    cmd.Parameters.Add("USERID", OracleDbType.Int32).Direction = ParameterDirection.Output;
-
-
-        //    cmd.ExecuteNonQuery();
-
-
-        //    intNextID = Convert.ToInt32(cmd.Parameters["USERID"].Value.ToString());
-
-
-
-        //    //    myConn.Open();
-
-
-        //    //OracleDataReader dr = cmd.ExecuteReader();
-        //    //dr.Read();
-
-
-        //    //if (dr.IsDBNull(0))
-        //    //    intNextID = 1;
-        //    //else
-        //    //    intNextID = Convert.ToInt16(dr.GetValue(0)) + 1;
-
-
-        //    myConn.Close();
-        //    return intNextID++;
-
-
-        //} //end getUserID
-
-
         public DataSet leaderBoardScore()
         {
             String strSQL = "SELECT username, noGamesWon FROM userAccount WHERE rownum <= 10 ORDER BY noGamesWon DESC";
@@ -189,10 +145,9 @@ namespace CivilWarProject
             return ds;
         }
 
-
         public DataSet leaderBoardName()
         {
-            String strSQL = "SELECT username, noGamesWon FROM userAccount WHERE rownum <= 10 ORDER BY username DESC";
+            String strSQL = "SELECT username, noGamesWon FROM userAccount WHERE rownum <= 10 ORDER BY username";
 
             OracleCommand cmd = new OracleCommand(strSQL, connection);
 
